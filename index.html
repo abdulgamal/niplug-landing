@@ -196,7 +196,7 @@
         border-radius: 15px;
         padding: 20px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
+        max-width: 800px;
         margin: 30px auto;
         text-align: center;
         transition: all 0.3s ease;
@@ -223,6 +223,73 @@
         color: #666;
         line-height: 1.5;
         font-size: 0.95rem;
+      }
+
+      .service-content {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin: 20px 0;
+      }
+
+      @media (max-width: 768px) {
+        .service-content {
+          flex-direction: column;
+        }
+      }
+
+      .service-image {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .service-info {
+        flex: 1;
+        text-align: left;
+      }
+
+      .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+      }
+
+      .service-features li {
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .service-features i {
+        color: var(--primary);
+        margin-right: 10px;
+        font-size: 0.9rem;
+      }
+
+      .onboarding-form {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: var(--dark);
       }
 
       .controls {
@@ -593,15 +660,6 @@
             <li class="nav-item">
               <a class="nav-link" href="#packages">Packages</a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#pricing">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li> -->
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li> -->
           </ul>
           <a href="#signup" class="btn btn-primary ms-lg-3">Get Started</a>
         </div>
@@ -613,11 +671,10 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 order-lg-1 order-2">
-            <h1 class="display-4 fw-bold">Plug into Success with Niplug</h1>
+            <h1 class="display-4 fw-bold">Welcome to the NiPlug Network</h1>
             <p class="lead my-4">
-              More ways to reach your audience. Storefronts Plugs, Tip Plugs,
-              Courses Plugs, Memberships, Ad Plugs, In-Link-Bio Plugs and many
-              more are available on our platform.
+              A vibrant community of influencers and content creators uniting to
+              collaborate, innovate, and unlock income opportunities for all.
             </p>
             <a href="#services" class="btn btn-light btn-lg"
               >Explore Our Plugs</a
@@ -625,7 +682,7 @@
           </div>
           <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0 text-center">
             <img
-              src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+              src="assets/images/content.jpg"
               class="img-fluid hero-img"
               alt="Niplug Services"
             />
@@ -639,7 +696,7 @@
       <div class="container py-4">
         <div class="row">
           <div class="col-12">
-            <h2 class="section-title">Our Service Plugs</h2>
+            <h2 class="section-title">Our NiPlug Facets</h2>
             <p class="text-center">
               Choose from our variety of plugs to connect with your audience
             </p>
@@ -655,8 +712,9 @@
 
         <!-- Service Detail Container -->
         <div class="service-detail" id="serviceDetail">
-          <h3 id="detailTitle">Select a Service</h3>
-          <p id="detailDescription">Tap on any service to see details</p>
+          <div id="detailContent">
+            <!-- Content will be populated by JavaScript -->
+          </div>
         </div>
 
         <div class="controls">
@@ -951,67 +1009,76 @@
         const services = [
           {
             id: 1,
-            name: "Storefronts Plug",
-            icon: "fas fa-store",
+            name: "eCommerce",
+            icon: "fas fa-shopping-cart",
             description:
-              "Create beautiful online stores to showcase and sell your products with ease. Our Storefronts Plug includes inventory management, secure payment processing, and customizable templates.",
+              "Complete eCommerce solutions for influencers and content creators to sell products and services.",
+            features: [
+              "NiPlug Shop - Full online store setup",
+              "NiPlug Shop App (Coming Soon) - Mobile commerce platform",
+              "Plug of the Week - Featured promotions for influencers",
+            ],
+            image:
+              "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
             angle: 0,
           },
           {
             id: 2,
-            name: "Tip Plug",
-            icon: "fas fa-gift",
+            name: "Experiences",
+            icon: "fas fa-star",
             description:
-              "Allow your audience to show appreciation with a seamless tipping system. Set up one-time or recurring tips with multiple payment options and customizable amounts.",
+              "Create unforgettable experiences for your audience with our premium event and engagement solutions.",
+            features: [
+              "VIP Experience - Exclusive premium events",
+              "Xperience - Interactive audience engagements",
+            ],
+            image:
+              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
             angle: 60,
           },
           {
             id: 3,
-            name: "Courses Plug",
-            icon: "fas fa-graduation-cap",
+            name: "Media/Studio",
+            icon: "fas fa-film",
             description:
-              "Create and sell online courses with our powerful educational platform. Includes video hosting, quizzes, progress tracking, and student management tools.",
+              "Professional media production services and platforms to showcase your content.",
+            features: [
+              "NiPlug Podcasts - Audio content platform",
+              "NiPlug Photoshoot Services - Professional photography",
+              "NiPlug TV (Coming Soon) - Video content platform",
+            ],
+            image:
+              "https://images.unsplash.com/photo-1617463874381-85b513b3e991?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
             angle: 120,
           },
           {
             id: 4,
-            name: "Memberships",
+            name: "Community",
             icon: "fas fa-users",
             description:
-              "Build a community with exclusive membership content and benefits. Offer tiered membership levels, gated content, and recurring billing options.",
+              "Connect, collaborate and grow with our comprehensive community building tools.",
+            features: [
+              "Tip Plug (tiplug.ke) - Secure tipping without revealing personal numbers",
+              "Influencer App - Virtual shop for products and services",
+              "NiPlug Connect - Network with other influencers and creators",
+            ],
+            image:
+              "https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
             angle: 180,
-          },
-          {
-            id: 5,
-            name: "Ad Plug",
-            icon: "fas fa-ad",
-            description:
-              "Monetize your content with targeted advertising solutions. Our Ad Plug manages ad placement, rotation, and performance analytics to maximize your revenue.",
-            angle: 240,
-          },
-          {
-            id: 6,
-            name: "In-Link-Bio Plug",
-            icon: "fas fa-link",
-            description:
-              "Create a powerful landing page with all your important links in one place. Perfect for social media profiles with customizable themes and analytics.",
-            angle: 300,
           },
         ];
 
         const wheel = document.getElementById("serviceWheel");
         const serviceDetail = document.getElementById("serviceDetail");
-        const detailTitle = document.getElementById("detailTitle");
-        const detailDescription = document.getElementById("detailDescription");
+        const detailContent = document.getElementById("detailContent");
         const rotateLeftBtn = document.getElementById("rotateLeft");
         const rotateRightBtn = document.getElementById("rotateRight");
 
         let rotation = 0;
         let activeService = null;
-        let wheelSize = 320; // Default for mobile
-        let itemSize = 90; // Default for mobile
+        let wheelSize = 320;
+        let itemSize = 90;
 
-        // Adjust wheel size based on screen width
         function adjustWheelSize() {
           if (window.innerWidth >= 992) {
             wheelSize = 550;
@@ -1033,7 +1100,6 @@
           wheel.style.width = `${wheelSize}px`;
           wheel.style.height = `${wheelSize}px`;
 
-          // Reposition all service items
           document.querySelectorAll(".service-item").forEach((item, index) => {
             const service = services[index];
             const angle = (service.angle * Math.PI) / 180;
@@ -1049,7 +1115,6 @@
             item.style.top = `${y}px`;
           });
 
-          // Update connector lines
           document
             .querySelectorAll(".connector")
             .forEach((connector, index) => {
@@ -1060,14 +1125,12 @@
             });
         }
 
-        // Create service items and position them in a circle
         function createWheel() {
           services.forEach((service) => {
             const serviceItem = document.createElement("div");
             serviceItem.className = "service-item";
             serviceItem.dataset.id = service.id;
 
-            // Calculate position
             const angle = (service.angle * Math.PI) / 180;
             const radius = wheelSize / 2 - itemSize / 2;
             const center = wheelSize / 2;
@@ -1078,7 +1141,6 @@
             serviceItem.style.left = `${x}px`;
             serviceItem.style.top = `${y}px`;
 
-            // Create connector line
             const connector = document.createElement("div");
             connector.className = "connector";
             connector.style.width = `${wheelSize / 2}px`;
@@ -1087,13 +1149,11 @@
             connector.style.transform = `rotate(${service.angle}deg)`;
             wheel.appendChild(connector);
 
-            // Add service content
             serviceItem.innerHTML = `
-                        <div class="service-icon"><i class="${service.icon}"></i></div>
-                        <div class="service-name">${service.name}</div>
-                    `;
+              <div class="service-icon"><i class="${service.icon}"></i></div>
+              <div class="service-name">${service.name}</div>
+            `;
 
-            // Add click event
             serviceItem.addEventListener("click", () => {
               setActiveService(service.id);
             });
@@ -1102,31 +1162,101 @@
           });
         }
 
-        // Set active service function
         function setActiveService(serviceId) {
-          // Remove active class from all services
           document.querySelectorAll(".service-item").forEach((item) => {
             item.classList.remove("active");
           });
 
-          // Add active class to clicked service
           const selectedService = document.querySelector(
             `.service-item[data-id="${serviceId}"]`
           );
           selectedService.classList.add("active");
 
-          // Update detail view
           const service = services.find((s) => s.id === serviceId);
-          detailTitle.textContent = service.name;
-          detailDescription.textContent = service.description;
 
-          // Show detail container if hidden
+          detailContent.innerHTML = `
+            <h3>${service.name}</h3>
+            <p>${service.description}</p>
+            
+            <div class="service-content">
+              <div class="service-image">
+                <img src="${service.image}" alt="${
+            service.name
+          }" loading="lazy">
+              </div>
+              <div class="service-info">
+                <h5>Features:</h5>
+                <ul class="service-features">
+                  ${service.features
+                    .map(
+                      (feature) =>
+                        `<li><i class="fas fa-check"></i> ${feature}</li>`
+                    )
+                    .join("")}
+                </ul>
+              </div>
+            </div>
+            
+            <div class="onboarding-form">
+              <h5>Get Started with ${service.name}</h5>
+              <form id="onboardingForm-${service.id}" class="row g-3">
+                <div class="col-md-6 form-group">
+                  <label for="name-${service.id}">Full Name</label>
+                  <input type="text" class="form-control" id="name-${
+                    service.id
+                  }" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="email-${service.id}">Email</label>
+                  <input type="email" class="form-control" id="email-${
+                    service.id
+                  }" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="location-${service.id}">Location</label>
+                  <input type="text" class="form-control" id="location-${
+                    service.id
+                  }" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="social-${service.id}">Social Media Handle</label>
+                  <input type="text" class="form-control" id="social-${
+                    service.id
+                  }" placeholder="@username" required>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Join ${
+                    service.name
+                  }</button>
+                </div>
+              </form>
+            </div>
+          `;
+
+          // Add form submission handler
+          const form = document.getElementById(`onboardingForm-${service.id}`);
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = {
+              service: service.name,
+              name: document.getElementById(`name-${service.id}`).value,
+              email: document.getElementById(`email-${service.id}`).value,
+              location: document.getElementById(`location-${service.id}`).value,
+              social: document.getElementById(`social-${service.id}`).value,
+            };
+
+            // Here you would typically send the data to your server
+            console.log("Form submitted:", formData);
+            alert(
+              `Thank you for your interest in ${service.name}! We'll contact you soon.`
+            );
+            form.reset();
+          });
+
           serviceDetail.classList.add("active");
-
           activeService = serviceId;
         }
 
-        // Rotation controls
         rotateLeftBtn.addEventListener("click", () => {
           rotation += 60;
           wheel.style.transform = `rotate(${rotation}deg)`;
@@ -1137,17 +1267,12 @@
           wheel.style.transform = `rotate(${rotation}deg)`;
         });
 
-        // Initialize wheel
         createWheel();
         adjustWheelSize();
-
-        // Initialize with first service active
         setActiveService(1);
 
-        // Listen for window resize
         window.addEventListener("resize", adjustWheelSize);
 
-        // Add touch events for mobile
         let touchStartX = 0;
         wheel.addEventListener("touchstart", (e) => {
           touchStartX = e.touches[0].clientX;
@@ -1158,12 +1283,9 @@
           const diff = touchEndX - touchStartX;
 
           if (Math.abs(diff) > 50) {
-            // Minimum swipe distance
             if (diff > 0) {
-              // Swipe right - rotate left
               rotation += 60;
             } else {
-              // Swipe left - rotate right
               rotation -= 60;
             }
             wheel.style.transform = `rotate(${rotation}deg)`;

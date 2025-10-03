@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niplug - All-in-One Service Platform</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #006664;
+        --secondary: #8f94fb;
+        --accent: #fff5ba;
+        --light: #010101;
+        --dark: #343a40;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+      }
+
+      .navbar {
+        padding: 15px 0;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: var(--primary);
+      }
+
+      .nav-link {
+        font-weight: 500;
+        margin: 0 10px;
+      }
+
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 80px 0;
+        border-radius: 0 0 30px 30px;
+      }
+
+      @media (min-width: 992px) {
+        .hero {
+          padding: 100px 0;
+          border-radius: 0 0 50px 50px;
+        }
+      }
+
+      .section-title {
+        position: relative;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .section-title:after {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 4px;
+        background: var(--primary);
+        margin: 10px auto;
+      }
+
+      /* Service Wheel Styles */
+      .service-wheel-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 0;
+        position: relative;
+        min-height: 60vh;
+      }
+
+      .wheel-center {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        border-radius: 50%;
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.8),
+          0 0 20px rgba(0, 0, 0, 0.15);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .service-wheel {
+        position: relative;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        transition: transform 1s ease;
+      }
+
+      .service-item {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
+        cursor: pointer;
+        transform-origin: center;
+        z-index: 2;
+        font-size: 0.8rem;
+      }
+
+      .service-item:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        z-index: 3;
+      }
+
+      .service-item.active {
+        transform: scale(1.15);
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 10px 25px rgba(78, 84, 200, 0.4);
+        z-index: 4;
+      }
+
+      .service-item.active .service-icon {
+        color: white;
+      }
+
+      .service-icon {
+        font-size: 1.4rem;
+        color: var(--primary);
+        margin-bottom: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .service-name {
+        font-weight: 600;
+        font-size: 0.7rem;
+        padding: 0 5px;
+        line-height: 1.1;
+      }
+
+      .service-detail {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 30px auto;
+        text-align: center;
+        transition: all 0.3s ease;
+        transform: translateY(30px);
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .service-detail.active {
+        transform: translateY(0);
+        opacity: 1;
+        height: auto;
+        margin-bottom: 50px;
+      }
+
+      .service-detail h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .service-detail p {
+        color: #666;
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .control-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: white;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1rem;
+        color: var(--primary);
+        transition: all 0.3s ease;
+      }
+
+      .control-btn:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(78, 84, 200, 0.3);
+      }
+
+      /* Connector lines */
+      .connector {
+        position: absolute;
+        background: var(--primary);
+        height: 2px;
+        transform-origin: 0 0;
+        z-index: 1;
+        opacity: 0.3;
+      }
+
+      .pricing-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+        margin-bottom: 30px;
+        height: auto;
+      }
+
+      @media (min-width: 992px) {
+        .pricing-card {
+          margin-bottom: 0;
+          height: 100%;
+        }
+
+        .pricing-card.featured {
+          transform: scale(1.05);
+        }
+      }
+
+      .pricing-card.featured {
+        border: 2px solid var(--primary);
+        z-index: 1;
+      }
+
+      .pricing-card.featured:before {
+        content: "Most Popular";
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--primary);
+        color: white;
+        padding: 5px 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 0 0 0 15px;
+      }
+
+      .price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .pricing-feature {
+        margin: 10px 0;
+      }
+
+      .pricing-feature i {
+        color: var(--primary);
+        margin-right: 10px;
+      }
+
+      .cta-section {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 60px 0;
+        border-radius: 30px;
+        margin: 50px 0;
+      }
+
+      @media (min-width: 768px) {
+        .cta-section {
+          padding: 80px 0;
+          border-radius: 50px;
+        }
+      }
+
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 50px 0 20px;
+      }
+
+      @media (min-width: 768px) {
+        footer {
+          padding: 60px 0 30px;
+        }
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+      }
+
+      .social-icons a:hover {
+        color: var(--secondary);
+      }
+
+      .footer-section {
+        margin-bottom: 30px;
+      }
+
+      @media (min-width: 768px) {
+        .footer-section {
+          margin-bottom: 0;
+        }
+      }
+
+      /* Packages Section */
+      .packages-section {
+        padding: 80px 0;
+        background: white;
+      }
+
+      .package-card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        background: white;
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .package-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 25px 20px;
+        text-align: center;
+      }
+
+      .package-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .package-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
+
+      .package-price span {
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .package-body {
+        padding: 25px;
+      }
+
+      .package-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 25px 0;
+      }
+
+      .package-features li {
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f1f1;
+        display: flex;
+        align-items: center;
+      }
+
+      .package-features li:last-child {
+        border-bottom: none;
+      }
+
+      .package-features i {
+        color: var(--primary);
+        margin-right: 10px;
+        font-size: 1.1rem;
+      }
+
+      .package-cta {
+        text-align: center;
+      }
+
+      /* Responsive adjustments */
+      @media (min-width: 400px) {
+        .service-wheel {
+          width: 360px;
+          height: 360px;
+        }
+
+        .service-item {
+          width: 100px;
+          height: 100px;
+        }
+
+        .service-icon {
+          font-size: 1.6rem;
+        }
+
+        .service-name {
+          font-size: 0.75rem;
+        }
+
+        .wheel-center {
+          width: 90px;
+          height: 90px;
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (min-width: 576px) {
+        .service-wheel {
+          width: 450px;
+          height: 450px;
+        }
+
+        .service-item {
+          width: 120px;
+          height: 120px;
+        }
+
+        .service-icon {
+          font-size: 1.8rem;
+        }
+
+        .service-name {
+          font-size: 0.85rem;
+        }
+
+        .wheel-center {
+          width: 100px;
+          height: 100px;
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .service-wheel {
+          width: 500px;
+          height: 500px;
+        }
+
+        .service-item {
+          width: 130px;
+          height: 130px;
+        }
+
+        .service-icon {
+          font-size: 2rem;
+        }
+
+        .service-name {
+          font-size: 0.9rem;
+        }
+
+        .wheel-center {
+          width: 110px;
+          height: 110px;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .service-wheel {
+          width: 550px;
+          height: 550px;
+        }
+
+        .service-item {
+          width: 140px;
+          height: 140px;
+        }
+
+        .wheel-center {
+          width: 120px;
+          height: 120px;
+        }
+
+        .pricing-card.featured {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Touch-friendly styles for mobile */
+      .service-item {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .control-btn {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Hero image responsiveness */
+      .hero-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="assets/images/niplug.png"
+            alt="Logo"
+            width="200"
+            height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#packages">Packages</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#pricing">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li> -->
+          </ul>
+          <a href="#signup" class="btn btn-primary ms-lg-3">Get Started</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-1 order-2">
+            <h1 class="display-4 fw-bold">Welcome to the NiPlug Network</h1>
+            <p class="lead my-4">
+              A vibrant community of influencers and content creators uniting to
+              collaborate, innovate, and unlock income opportunities for all.
+            </p>
+            <a href="#services" class="btn btn-light btn-lg"
+              >Explore Our Plugs</a
+            >
+          </div>
+          <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0 text-center">
+            <img
+              src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+              class="img-fluid hero-img"
+              alt="Niplug Services"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Wheel Section -->
+    <section id="services" class="py-4">
+      <div class="container py-4">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="section-title">Our Service Plugs</h2>
+            <p class="text-center">
+              Choose from our variety of plugs to connect with your audience
+            </p>
+          </div>
+        </div>
+
+        <div class="service-wheel-container">
+          <div class="service-wheel" id="serviceWheel">
+            <!-- Service items will be positioned by JavaScript -->
+          </div>
+          <div class="wheel-center">niplug</div>
+        </div>
+
+        <!-- Service Detail Container -->
+        <div class="service-detail" id="serviceDetail">
+          <h3 id="detailTitle">Select a Service</h3>
+          <p id="detailDescription">Tap on any service to see details</p>
+        </div>
+
+        <div class="controls">
+          <button class="control-btn" id="rotateLeft">
+            <i class="fas fa-undo"></i>
+          </button>
+          <button class="control-btn" id="rotateRight">
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages-section">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-12">
+            <h2 class="section-title">Our Packages</h2>
+            <p class="lead">Choose the perfect package for your needs</p>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="package-card">
+              <div class="package-header">
+                <h3 class="package-name">Basic Package</h3>
+                <p class="package-price">$99 <span>/session</span></p>
+              </div>
+              <div class="package-body">
+                <ul class="package-features">
+                  <li><i class="fas fa-check-circle"></i> 10 edited pics</li>
+                  <li><i class="fas fa-check-circle"></i> Mini Cake</li>
+                  <li><i class="fas fa-check-circle"></i> Jewelleries</li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 1 wrap and 2 outfit
+                    change
+                  </li>
+                  <li><i class="fas fa-check-circle"></i> Free bts</li>
+                  <li><i class="fas fa-check-circle"></i> Chocolate</li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Free Birthday Ecard
+                  </li>
+                  <li><i class="fas fa-check-circle"></i> Flowers</li>
+                </ul>
+                <div class="package-cta">
+                  <a href="#" class="btn btn-primary">Select Package</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="package-card featured">
+              <div class="package-header">
+                <h3 class="package-name">Premium Package</h3>
+                <p class="package-price">$199 <span>/session</span></p>
+              </div>
+              <div class="package-body">
+                <ul class="package-features">
+                  <li><i class="fas fa-check-circle"></i> 20 edited pics</li>
+                  <li><i class="fas fa-check-circle"></i> Mini Cake</li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Premium Jewelleries
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 2 wraps and 4 outfit
+                    changes
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Free bts (Behind The
+                    Scenes)
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Luxury Chocolate Box
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Free Birthday Ecard
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Premium Flower Bouquet
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> An extra team member
+                  </li>
+                </ul>
+                <div class="package-cta">
+                  <a href="#" class="btn btn-primary">Select Package</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="package-card">
+              <div class="package-header">
+                <h3 class="package-name">Deluxe Package</h3>
+                <p class="package-price">$299 <span>/session</span></p>
+              </div>
+              <div class="package-body">
+                <ul class="package-features">
+                  <li><i class="fas fa-check-circle"></i> 30 edited pics</li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Custom Designed Cake
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Luxury Jewelleries
+                    Collection
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 3 wraps and 6 outfit
+                    changes
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Extended bts coverage
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Gourmet Chocolate
+                    Collection
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Premium Birthday Ecard
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Luxury Flower
+                    Arrangement
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Two additional team
+                    members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 1 year digital storage
+                  </li>
+                </ul>
+                <div class="package-cta">
+                  <a href="#" class="btn btn-primary">Select Package</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="signup" class="cta-section">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-12 col-md-8 mx-auto">
+            <h2 class="display-5 fw-bold">Ready to Plug into Success?</h2>
+            <p class="lead my-4">
+              Join thousands of creators and businesses already using Niplug to
+              connect with their audience.
+            </p>
+            <form class="row g-3 justify-content-center">
+              <div class="col-12 col-md-8">
+                <input
+                  type="email"
+                  class="form-control form-control-lg"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="col-12 col-md-4">
+                <button type="submit" class="btn btn-light btn-lg w-100">
+                  Get Started
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 footer-section">
+            <img
+              src="assets/images/niplug.png"
+              alt="Logo"
+              width="200"
+              height="50"
+            />
+            <p class="mt-3">
+              Your all-in-one platform to connect with your audience through
+              multiple service plugs.
+            </p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-6 footer-section">
+            <h5>Services</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  >Storefronts</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  >Tip Plugs</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Courses</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  >Memberships</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 col-6 footer-section">
+            <h5>Company</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none">About</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Careers</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Blog</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Press</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 col-6 footer-section">
+            <h5>Support</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Contact</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Privacy</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Terms</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 col-6 footer-section">
+            <h5>Contact</h5>
+            <ul class="list-unstyled">
+              <li>hello@niplug.com</li>
+              <li>+1 (234) 567-8900</li>
+              <li>123 Business Ave</li>
+              <li>New York, NY 10001</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="mt-4" />
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2023 Niplug. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="#" class="text-white text-decoration-none me-3"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-white text-decoration-none me-3"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-white text-decoration-none"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const services = [
+          {
+            id: 1,
+            name: "Storefronts Plug",
+            icon: "fas fa-store",
+            description:
+              "Create beautiful online stores to showcase and sell your products with ease. Our Storefronts Plug includes inventory management, secure payment processing, and customizable templates.",
+            angle: 0,
+          },
+          {
+            id: 2,
+            name: "Tip Plug",
+            icon: "fas fa-gift",
+            description:
+              "Allow your audience to show appreciation with a seamless tipping system. Set up one-time or recurring tips with multiple payment options and customizable amounts.",
+            angle: 60,
+          },
+          {
+            id: 3,
+            name: "Courses Plug",
+            icon: "fas fa-graduation-cap",
+            description:
+              "Create and sell online courses with our powerful educational platform. Includes video hosting, quizzes, progress tracking, and student management tools.",
+            angle: 120,
+          },
+          {
+            id: 4,
+            name: "Memberships",
+            icon: "fas fa-users",
+            description:
+              "Build a community with exclusive membership content and benefits. Offer tiered membership levels, gated content, and recurring billing options.",
+            angle: 180,
+          },
+          {
+            id: 5,
+            name: "Ad Plug",
+            icon: "fas fa-ad",
+            description:
+              "Monetize your content with targeted advertising solutions. Our Ad Plug manages ad placement, rotation, and performance analytics to maximize your revenue.",
+            angle: 240,
+          },
+          {
+            id: 6,
+            name: "In-Link-Bio Plug",
+            icon: "fas fa-link",
+            description:
+              "Create a powerful landing page with all your important links in one place. Perfect for social media profiles with customizable themes and analytics.",
+            angle: 300,
+          },
+        ];
+
+        const wheel = document.getElementById("serviceWheel");
+        const serviceDetail = document.getElementById("serviceDetail");
+        const detailTitle = document.getElementById("detailTitle");
+        const detailDescription = document.getElementById("detailDescription");
+        const rotateLeftBtn = document.getElementById("rotateLeft");
+        const rotateRightBtn = document.getElementById("rotateRight");
+
+        let rotation = 0;
+        let activeService = null;
+        let wheelSize = 320; // Default for mobile
+        let itemSize = 90; // Default for mobile
+
+        // Adjust wheel size based on screen width
+        function adjustWheelSize() {
+          if (window.innerWidth >= 992) {
+            wheelSize = 550;
+            itemSize = 140;
+          } else if (window.innerWidth >= 768) {
+            wheelSize = 500;
+            itemSize = 130;
+          } else if (window.innerWidth >= 576) {
+            wheelSize = 450;
+            itemSize = 120;
+          } else if (window.innerWidth >= 400) {
+            wheelSize = 360;
+            itemSize = 100;
+          } else {
+            wheelSize = 320;
+            itemSize = 90;
+          }
+
+          wheel.style.width = `${wheelSize}px`;
+          wheel.style.height = `${wheelSize}px`;
+
+          // Reposition all service items
+          document.querySelectorAll(".service-item").forEach((item, index) => {
+            const service = services[index];
+            const angle = (service.angle * Math.PI) / 180;
+            const radius = wheelSize / 2 - itemSize / 2;
+            const center = wheelSize / 2;
+
+            const x = center + radius * Math.cos(angle) - itemSize / 2;
+            const y = center + radius * Math.sin(angle) - itemSize / 2;
+
+            item.style.width = `${itemSize}px`;
+            item.style.height = `${itemSize}px`;
+            item.style.left = `${x}px`;
+            item.style.top = `${y}px`;
+          });
+
+          // Update connector lines
+          document
+            .querySelectorAll(".connector")
+            .forEach((connector, index) => {
+              const service = services[index];
+              connector.style.width = `${wheelSize / 2}px`;
+              connector.style.left = `${wheelSize / 2}px`;
+              connector.style.top = `${wheelSize / 2}px`;
+            });
+        }
+
+        // Create service items and position them in a circle
+        function createWheel() {
+          services.forEach((service) => {
+            const serviceItem = document.createElement("div");
+            serviceItem.className = "service-item";
+            serviceItem.dataset.id = service.id;
+
+            // Calculate position
+            const angle = (service.angle * Math.PI) / 180;
+            const radius = wheelSize / 2 - itemSize / 2;
+            const center = wheelSize / 2;
+
+            const x = center + radius * Math.cos(angle) - itemSize / 2;
+            const y = center + radius * Math.sin(angle) - itemSize / 2;
+
+            serviceItem.style.left = `${x}px`;
+            serviceItem.style.top = `${y}px`;
+
+            // Create connector line
+            const connector = document.createElement("div");
+            connector.className = "connector";
+            connector.style.width = `${wheelSize / 2}px`;
+            connector.style.left = `${center}px`;
+            connector.style.top = `${center}px`;
+            connector.style.transform = `rotate(${service.angle}deg)`;
+            wheel.appendChild(connector);
+
+            // Add service content
+            serviceItem.innerHTML = `
+                        <div class="service-icon"><i class="${service.icon}"></i></div>
+                        <div class="service-name">${service.name}</div>
+                    `;
+
+            // Add click event
+            serviceItem.addEventListener("click", () => {
+              setActiveService(service.id);
+            });
+
+            wheel.appendChild(serviceItem);
+          });
+        }
+
+        // Set active service function
+        function setActiveService(serviceId) {
+          // Remove active class from all services
+          document.querySelectorAll(".service-item").forEach((item) => {
+            item.classList.remove("active");
+          });
+
+          // Add active class to clicked service
+          const selectedService = document.querySelector(
+            `.service-item[data-id="${serviceId}"]`
+          );
+          selectedService.classList.add("active");
+
+          // Update detail view
+          const service = services.find((s) => s.id === serviceId);
+          detailTitle.textContent = service.name;
+          detailDescription.textContent = service.description;
+
+          // Show detail container if hidden
+          serviceDetail.classList.add("active");
+
+          activeService = serviceId;
+        }
+
+        // Rotation controls
+        rotateLeftBtn.addEventListener("click", () => {
+          rotation += 60;
+          wheel.style.transform = `rotate(${rotation}deg)`;
+        });
+
+        rotateRightBtn.addEventListener("click", () => {
+          rotation -= 60;
+          wheel.style.transform = `rotate(${rotation}deg)`;
+        });
+
+        // Initialize wheel
+        createWheel();
+        adjustWheelSize();
+
+        // Initialize with first service active
+        setActiveService(1);
+
+        // Listen for window resize
+        window.addEventListener("resize", adjustWheelSize);
+
+        // Add touch events for mobile
+        let touchStartX = 0;
+        wheel.addEventListener("touchstart", (e) => {
+          touchStartX = e.touches[0].clientX;
+        });
+
+        wheel.addEventListener("touchend", (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diff = touchEndX - touchStartX;
+
+          if (Math.abs(diff) > 50) {
+            // Minimum swipe distance
+            if (diff > 0) {
+              // Swipe right - rotate left
+              rotation += 60;
+            } else {
+              // Swipe left - rotate right
+              rotation -= 60;
+            }
+            wheel.style.transform = `rotate(${rotation}deg)`;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

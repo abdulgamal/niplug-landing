@@ -1025,7 +1025,7 @@
             ],
             image:
               "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 0, // Top
+            angle: 0,
           },
           {
             id: 2,
@@ -1039,7 +1039,7 @@
             ],
             image:
               "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 180, // Bottom
+            angle: 60,
           },
           {
             id: 3,
@@ -1054,7 +1054,7 @@
             ],
             image:
               "https://images.unsplash.com/photo-1617463874381-85b513b3e991?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 90, // Right
+            angle: 120,
           },
           {
             id: 4,
@@ -1069,7 +1069,7 @@
             ],
             image:
               "https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 270, // Left
+            angle: 180,
           },
         ];
 
@@ -1105,10 +1105,10 @@
           // Clamp between reasonable min and max values
           const wheelSize = Math.max(250, Math.min(500, baseSize));
           const centerSize = wheelSize * 0.22;
-          const itemSize = wheelSize * 0.25; // Slightly larger items for 4 options
-          const iconSize = Math.max(20, itemSize * 0.25);
-          const fontSize = Math.max(12, itemSize * 0.12);
-          const centerFontSize = Math.max(14, centerSize * 0.18);
+          const itemSize = wheelSize * 0.2;
+          const iconSize = Math.max(16, itemSize * 0.25);
+          const fontSize = Math.max(10, itemSize * 0.1);
+          const centerFontSize = Math.max(12, centerSize * 0.18);
 
           return {
             wheelSize,
@@ -1155,20 +1155,13 @@
             if (name) name.style.fontSize = `${sizes.fontSize}px`;
           });
 
-          // Update connector lines (only for top and bottom)
+          // Update connector lines
           document
             .querySelectorAll(".connector")
             .forEach((connector, index) => {
-              const service = services[index];
-              // Only show connectors for top and bottom items (0° and 180°)
-              if (service.angle === 0 || service.angle === 180) {
-                connector.style.display = "block";
-                connector.style.width = `${sizes.wheelSize / 2}px`;
-                connector.style.left = `${sizes.wheelSize / 2}px`;
-                connector.style.top = `${sizes.wheelSize / 2}px`;
-              } else {
-                connector.style.display = "none";
-              }
+              connector.style.width = `${sizes.wheelSize / 2}px`;
+              connector.style.left = `${sizes.wheelSize / 2}px`;
+              connector.style.top = `${sizes.wheelSize / 2}px`;
             });
         }
 
@@ -1192,472 +1185,13 @@
             serviceItem.style.width = `${sizes.itemSize}px`;
             serviceItem.style.height = `${sizes.itemSize}px`;
 
-            // Only create connectors for top and bottom items
-            if (service.angle === 0 || service.angle === 180) {
-              const connector = document.createElement("div");
-              connector.className = "connector";
-              connector.style.width = `${sizes.wheelSize / 2}px`;
-              connector.style.left = `${center}px`;
-              connector.style.top = `${center}px`;
-              connector.style.transform = `rotate(${service.angle}deg)`;
-              wheel.appendChild(connector);
-            }
-
-            serviceItem.innerHTML = `
-          <div class="service-icon" style="font-size: ${sizes.iconSize}px">
-            <i class="${service.icon}"></i>
-          </div>
-          <div class="service-name" style="font-size: ${sizes.fontSize}px">
-            ${service.name}
-          </div>
-        `;
-
-            serviceItem.addEventListener("click", () => {
-              setActiveService(service.id);
-              // Scroll to the service detail section
-              const detailSection = document.getElementById(
-                `service-${service.id}`
-              );
-              if (detailSection) {
-                detailSection.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-            });
-
-            wheel.appendChild(serviceItem);
-          });
-        }
-
-        function createServiceDetailSections() {
-          services.forEach((service) => {
-            const section = document.createElement("section");
-            section.id = `service-${service.id}`;
-            section.className = "service-detail-section";
-
-            section.innerHTML = `
-          <div class="container">
-            <div class="service-detail-content">
-              <div class="service-detail-header">
-                <h2>${service.name}</h2>
-                <p>${service.description}</p>
-              </div>
-              
-              <div class="service-detail-body">
-                <div class="service-detail-image">
-                  <img src="${service.image}" alt="${
-              service.name
-            }" loading="lazy">
-                </div>
-                <div class="service-detail-info">
-                  <h4>What's Included:</h4>
-                  <ul class="service-features">
-                    ${service.features
-                      .map(
-                        (feature) =>
-                          `<li><i class="fas fa-check"></i> ${feature}</li>`
-                      )
-                      .join("")}
-                  </ul>
-                </div>
-              </div>
-              
-              <div class="onboarding-form">
-                <h3>Get Started with ${service.name}</h3>
-                <form id="onboardingForm-${service.id}" class="row g-3">
-                  <div class="col-md-6 form-group">
-                    <label for="name-${service.id}">Full Name</label>
-                    <input type="text" class="form-control" id="name-${
-                      service.id
-                    }" required>
-                  </div>
-                  <div class="col-md-6 form-group">
-                    <label for="email-${service.id}">Email</label>
-                    <input type="email" class="form-control" id="email-${
-                      service.id
-                    }" required>
-                  </div>
-                  <div class="col-md-6 form-group">
-                    <label for="location-${service.id}">Phone</label>
-                    <input type="text" class="form-control" id="location-${
-                      service.id
-                    }" required>
-                  </div>
-                  <div class="col-md-6 form-group">
-                    <label for="social-${
-                      service.id
-                    }">Social Media Handle</label>
-                    <input type="text" class="form-control" id="social-${
-                      service.id
-                    }" placeholder="@username" required>
-                  </div>
-                  <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn-${
-                      service.id
-                    }">
-                      <span class="submit-text">Join ${service.name}</span>
-                      <div class="spinner-border spinner-border-sm ms-2 d-none" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                    </button>
-                  </div>
-                </form>
-                <div id="formMessage-${
-                  service.id
-                }" class="alert alert-success mt-3 d-none" role="alert">
-                  Thank you for your interest! We've received your information and will contact you soon.
-                </div>
-              </div>
-              
-              <div class="back-to-wheel">
-                <button class="btn btn-outline-primary" onclick="scrollToWheel()">
-                  <i class="fas fa-arrow-left me-2"></i>Back to All Services
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-
-            // Add form submission handler
-            const form = section.querySelector(`#onboardingForm-${service.id}`);
-            const submitBtn = section.querySelector(`#submitBtn-${service.id}`);
-            const formMessage = section.querySelector(
-              `#formMessage-${service.id}`
-            );
-
-            form.addEventListener("submit", async function (e) {
-              e.preventDefault();
-
-              // Show loading state
-              const spinner = submitBtn.querySelector(".spinner-border");
-              const submitText = submitBtn.querySelector(".submit-text");
-              submitBtn.disabled = true;
-              spinner.classList.remove("d-none");
-              submitText.textContent = "Submitting...";
-              formMessage.classList.add("d-none");
-
-              const formData = {
-                subject: service.name,
-                fullname: document.getElementById(`name-${service.id}`).value,
-                email: document.getElementById(`email-${service.id}`).value,
-                phone: document.getElementById(`location-${service.id}`).value,
-                social: document.getElementById(`social-${service.id}`).value,
-                timestamp: new Date().toISOString(),
-              };
-
-              try {
-                const response = await fetch(
-                  "https://contactusapi-1.onrender.com/submit-form",
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                  }
-                );
-
-                if (response.ok) {
-                  // Success - show success message
-                  formMessage.classList.remove("d-none");
-                  formMessage.classList.remove("alert-danger");
-                  formMessage.classList.add("alert-success");
-                  formMessage.textContent =
-                    "Thank you for your interest! We've received your information and will contact you soon.";
-                  form.reset();
-                } else {
-                  throw new Error("Server responded with an error");
-                }
-              } catch (error) {
-                console.error("Error submitting form:", error);
-                // Show error message
-                formMessage.classList.remove("d-none");
-                formMessage.classList.remove("alert-success");
-                formMessage.classList.add("alert-danger");
-                formMessage.textContent =
-                  "Sorry, there was an error submitting your information. Please try again.";
-              } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                spinner.classList.add("d-none");
-                submitText.textContent = `Join ${service.name}`;
-              }
-            });
-
-            serviceDetailsContainer.appendChild(section);
-          });
-        }
-
-        function setActiveService(serviceId) {
-          // Remove active class from all services and sections
-          document.querySelectorAll(".service-item").forEach((item) => {
-            item.classList.remove("active");
-          });
-
-          document
-            .querySelectorAll(".service-detail-section")
-            .forEach((section) => {
-              section.classList.remove("active");
-            });
-
-          // Add active class to clicked service
-          const selectedService = document.querySelector(
-            `.service-item[data-id="${serviceId}"]`
-          );
-          if (selectedService) {
-            selectedService.classList.add("active");
-          }
-
-          // Show the corresponding detail section
-          const detailSection = document.getElementById(`service-${serviceId}`);
-          if (detailSection) {
-            detailSection.classList.add("active");
-          }
-
-          activeService = serviceId;
-        }
-
-        // Global function to scroll back to wheel
-        window.scrollToWheel = function () {
-          document
-            .getElementById("services")
-            .scrollIntoView({ behavior: "smooth" });
-        };
-
-        rotateLeftBtn.addEventListener("click", () => {
-          rotation += 90;
-          wheel.style.transform = `rotate(${rotation}deg)`;
-        });
-
-        rotateRightBtn.addEventListener("click", () => {
-          rotation -= 90;
-          wheel.style.transform = `rotate(${rotation}deg)`;
-        });
-
-        // Initialize
-        createWheel();
-        createServiceDetailSections();
-        adjustWheelSize();
-        setActiveService(1);
-
-        window.addEventListener("resize", adjustWheelSize);
-
-        // Touch events for mobile
-        let touchStartX = 0;
-        wheel.addEventListener("touchstart", (e) => {
-          touchStartX = e.touches[0].clientX;
-        });
-
-        wheel.addEventListener("touchend", (e) => {
-          const touchEndX = e.changedTouches[0].clientX;
-          const diff = touchEndX - touchStartX;
-
-          if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-              rotation += 90;
-            } else {
-              rotation -= 90;
-            }
-            wheel.style.transform = `rotate(${rotation}deg)`;
-          }
-        });
-      });
-    </script>
-
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const services = [
-          {
-            id: 1,
-            name: "eCommerce",
-            icon: "fas fa-shopping-cart",
-            description:
-              "Complete eCommerce solutions for influencers and content creators to sell products and services.",
-            features: [
-              "NiPlug Shop - Full online store setup",
-              "NiPlug Shop App (Coming Soon) - Mobile commerce platform",
-              "Plug of the Week - Featured promotions for influencers",
-            ],
-            image:
-              "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 0, // Top
-          },
-          {
-            id: 2,
-            name: "Experiences",
-            icon: "fas fa-star",
-            description:
-              "Create unforgettable experiences for your audience with our premium event and engagement solutions.",
-            features: [
-              "VIP Experience - Exclusive premium events",
-              "Xperience - Interactive audience engagements",
-            ],
-            image:
-              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 180, // Bottom
-          },
-          {
-            id: 3,
-            name: "Media/Studio",
-            icon: "fas fa-film",
-            description:
-              "Professional media production services and platforms to showcase your content.",
-            features: [
-              "NiPlug Podcasts - Audio content platform",
-              "NiPlug Photoshoot Services - Professional photography",
-              "NiPlug TV (Coming Soon) - Video content platform",
-            ],
-            image:
-              "https://images.unsplash.com/photo-1498925009621-5f027c0e28e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 90, // Right
-          },
-          {
-            id: 4,
-            name: "Community",
-            icon: "fas fa-users",
-            description:
-              "Connect, collaborate and grow with our comprehensive community building tools.",
-            features: [
-              "Tip Plug (tiplug.ke) - Secure tipping without revealing personal numbers",
-              "Influencer App - Virtual shop for products and services",
-              "NiPlug Connect - Network with other influencers and creators",
-            ],
-            image:
-              "https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            angle: 270, // Left
-          },
-        ];
-
-        const wheel = document.getElementById("serviceWheel");
-        const wheelCenter = document.getElementById("wheelCenter");
-        const serviceDetailsContainer = document.getElementById(
-          "serviceDetailsContainer"
-        );
-        const rotateLeftBtn = document.getElementById("rotateLeft");
-        const rotateRightBtn = document.getElementById("rotateRight");
-
-        let rotation = 0;
-        let activeService = null;
-
-        // Improved proportional sizing for mobile
-        function getProportionalSizes() {
-          const viewportWidth = window.innerWidth;
-          const viewportHeight = window.innerHeight;
-
-          // More conservative sizing for mobile
-          let baseSize;
-          if (viewportWidth < 576) {
-            // Small mobile
-            baseSize = Math.min(viewportWidth, viewportHeight) * 0.75;
-          } else if (viewportWidth < 768) {
-            // Mobile
-            baseSize = Math.min(viewportWidth, viewportHeight) * 0.65;
-          } else {
-            // Tablet and desktop
-            baseSize = Math.min(viewportWidth, viewportHeight) * 0.5;
-          }
-
-          // Clamp between reasonable min and max values
-          const wheelSize = Math.max(250, Math.min(500, baseSize));
-          const centerSize = wheelSize * 0.22;
-          const itemSize = wheelSize * 0.25; // Slightly larger items for 4 options
-          const iconSize = Math.max(20, itemSize * 0.25);
-          const fontSize = Math.max(12, itemSize * 0.12);
-          const centerFontSize = Math.max(14, centerSize * 0.18);
-
-          return {
-            wheelSize,
-            centerSize,
-            itemSize,
-            iconSize,
-            fontSize,
-            centerFontSize,
-          };
-        }
-
-        function adjustWheelSize() {
-          const sizes = getProportionalSizes();
-
-          // Apply sizes to wheel
-          wheel.style.width = `${sizes.wheelSize}px`;
-          wheel.style.height = `${sizes.wheelSize}px`;
-
-          // Apply sizes to center
-          wheelCenter.style.width = `${sizes.centerSize}px`;
-          wheelCenter.style.height = `${sizes.centerSize}px`;
-          wheelCenter.style.fontSize = `${sizes.centerFontSize}px`;
-
-          // Reposition service items
-          document.querySelectorAll(".service-item").forEach((item, index) => {
-            const service = services[index];
-            const angle = (service.angle * Math.PI) / 180;
-            const radius = sizes.wheelSize / 2 - sizes.itemSize / 2;
-            const center = sizes.wheelSize / 2;
-
-            const x = center + radius * Math.cos(angle) - sizes.itemSize / 2;
-            const y = center + radius * Math.sin(angle) - sizes.itemSize / 2;
-
-            item.style.width = `${sizes.itemSize}px`;
-            item.style.height = `${sizes.itemSize}px`;
-            item.style.left = `${x}px`;
-            item.style.top = `${y}px`;
-
-            // Update icon and font sizes
-            const icon = item.querySelector(".service-icon");
-            const name = item.querySelector(".service-name");
-
-            if (icon) icon.style.fontSize = `${sizes.iconSize}px`;
-            if (name) name.style.fontSize = `${sizes.fontSize}px`;
-          });
-
-          // Update connector lines (only for top and bottom)
-          document
-            .querySelectorAll(".connector")
-            .forEach((connector, index) => {
-              const service = services[index];
-              // Only show connectors for top and bottom items (0° and 180°)
-              if (service.angle === 0 || service.angle === 180) {
-                connector.style.display = "block";
-                connector.style.width = `${sizes.wheelSize / 2}px`;
-                connector.style.left = `${sizes.wheelSize / 2}px`;
-                connector.style.top = `${sizes.wheelSize / 2}px`;
-              } else {
-                connector.style.display = "none";
-              }
-            });
-        }
-
-        function createWheel() {
-          const sizes = getProportionalSizes();
-
-          services.forEach((service) => {
-            const serviceItem = document.createElement("div");
-            serviceItem.className = "service-item";
-            serviceItem.dataset.id = service.id;
-
-            const angle = (service.angle * Math.PI) / 180;
-            const radius = sizes.wheelSize / 2 - sizes.itemSize / 2;
-            const center = sizes.wheelSize / 2;
-
-            const x = center + radius * Math.cos(angle) - sizes.itemSize / 2;
-            const y = center + radius * Math.sin(angle) - sizes.itemSize / 2;
-
-            serviceItem.style.left = `${x}px`;
-            serviceItem.style.top = `${y}px`;
-            serviceItem.style.width = `${sizes.itemSize}px`;
-            serviceItem.style.height = `${sizes.itemSize}px`;
-
-            // Only create connectors for top and bottom items
-            if (service.angle === 0 || service.angle === 180) {
-              const connector = document.createElement("div");
-              connector.className = "connector";
-              connector.style.width = `${sizes.wheelSize / 2}px`;
-              connector.style.left = `${center}px`;
-              connector.style.top = `${center}px`;
-              connector.style.transform = `rotate(${service.angle}deg)`;
-              wheel.appendChild(connector);
-            }
+            const connector = document.createElement("div");
+            connector.className = "connector";
+            connector.style.width = `${sizes.wheelSize / 2}px`;
+            connector.style.left = `${center}px`;
+            connector.style.top = `${center}px`;
+            connector.style.transform = `rotate(${service.angle}deg)`;
+            wheel.appendChild(connector);
 
             serviceItem.innerHTML = `
               <div class="service-icon" style="font-size: ${sizes.iconSize}px">
@@ -1826,12 +1360,12 @@
         };
 
         rotateLeftBtn.addEventListener("click", () => {
-          rotation += 90;
+          rotation += 60;
           wheel.style.transform = `rotate(${rotation}deg)`;
         });
 
         rotateRightBtn.addEventListener("click", () => {
-          rotation -= 90;
+          rotation -= 60;
           wheel.style.transform = `rotate(${rotation}deg)`;
         });
 
@@ -1855,14 +1389,14 @@
 
           if (Math.abs(diff) > 50) {
             if (diff > 0) {
-              rotation += 90;
+              rotation += 60;
             } else {
-              rotation -= 90;
+              rotation -= 60;
             }
             wheel.style.transform = `rotate(${rotation}deg)`;
           }
         });
       });
-    </script> -->
+    </script>
   </body>
 </html>
